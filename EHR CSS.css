@@ -1,0 +1,51 @@
+/* Ensure the objects inside take up 100% of the available space and remove margins*/
+html {
+  margin: 0;
+  width:100%;
+  height: 100%;
+  background-color: aliceblue;
+}
+
+/* centre form horizontally and vertically on login page + adjust position of email and password*/
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100px;
+    background-color: pink;
+    border-radius: 30px;
+    width: 450px;
+    height: 500px;
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto; 
+}
+
+.email {
+    padding-bottom: 1000px;
+}
+
+.password {
+    margin-top: 1000px;
+}
+
+/* add colour, and adjust space of login button and add gap between password */
+.loginButton {
+    margin-top: 30px;;
+    width: 40%;
+    color: rgb(31, 31, 138);
+    background-color: white;
+    border-color: white;
+}
+
+h1 {
+    color: rgb(31, 31, 138);
+}
