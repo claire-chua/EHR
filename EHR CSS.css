@@ -1,9 +1,10 @@
-/* Ensure the objects inside take up 100% of the available space and remove margins*/
+/* Ensure the objects inside take up 100% of the available space and remove margins + overflow*/
 html {
   margin: 0;
   width:100%;
   height: 100%;
   background-color: aliceblue;
+  overflow: hidden;
 }
 
 /* centre form horizontally and vertically on login page + adjust position of email and password*/
