@@ -30,6 +30,10 @@ html {
     margin: auto; 
 }
 
+.loginError{
+    color: rgb(128, 2, 19);
+}
+
 .email {
     padding-bottom: 1000px;
 }
@@ -50,3 +54,4 @@ html {
 h1 {
     color: rgb(31, 31, 138);
 }
+
