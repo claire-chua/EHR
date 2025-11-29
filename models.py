@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     role: Mapped[str] = mapped_column(nullable=False)
 
     EHR: Mapped["EHR"] = relationship(
-        back_populated="user",
+        back_populates="user",
         uselist=False
     )
 
@@ -28,11 +28,11 @@ class EHR(db.Model):
     first_name: Mapped[str] = mapped_column(String(20), nullable=False)
     last_name: Mapped[str] = mapped_column(String(50), nullable=False)
     date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
-    gender: Mapped[str] = mapped_column(String(10), nullable=True)
-    address: Mapped[str] = mapped_column(String(255), nullable=True)
+    gender: Mapped[str] = mapped_column(String(10), nullable=False)
+    address: Mapped[str] = mapped_column(String(255), nullable=False)
     phone_no: Mapped[str] = mapped_column(String(30), nullable=False)
-    emergency_phone_no: Mapped[str] = mapped_column(String(30), nullable =True)
+    emergency_phone_no: Mapped[str] = mapped_column(String(30), nullable=False)
 
-    medical_history: Mapped[str] = mapped_column(Text, nullable =True)
+    medical_history: Mapped[str] = mapped_column(Text, nullable =False)
 
     user: Mapped["User"] = relationship(back_populates="EHR")
