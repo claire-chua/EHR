@@ -95,6 +95,13 @@ def providerdashboard():
     print(patients)
     return render_template("providerdashboard.html", patients=patients )
 
+@app.route("/providerdashboard/patient/<int:user_id>")
+@login_required
+def providerpatientdashboard(user_id):
+    user = db.session.get(User, user_id)
+    ehr = user.ehr
+    return render_template("providerpatientdashboard.html", patient=user, ehr=ehr )
+
 @app.route("/patientdashboard")
 @login_required
 #@patient_permission.require()
