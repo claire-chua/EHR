@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     role: Mapped[str] = mapped_column(nullable=False)
 
-    EHR: Mapped["EHR"] = relationship(
+    ehr: Mapped["EHR"] = relationship(
         back_populates="user",
         uselist=False
     )
@@ -35,4 +35,4 @@ class EHR(db.Model):
 
     medical_history: Mapped[str] = mapped_column(Text, nullable =False)
 
-    user: Mapped["User"] = relationship(back_populates="EHR")
+    user: Mapped["User"] = relationship(back_populates="ehr")

@@ -30,6 +30,7 @@ def add_user(email, password, role, ehr_data=None):
 with app.app_context():
     db.drop_all()
     db.create_all()
+    
     provider = add_user(
         email="florence.nightingale@gmail.com",
         password="nurse",

@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField
 from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed
 from sqlalchemy import select
 from db import db
-from models import User
+from models import User, EHR
 
 # Create a flask app 
 app = Flask(__name__)
@@ -19,6 +19,7 @@ app.config['SECRET_KEY'] = 'secret'
 with app.app_context():
     db.init_app(app)
     db.create_all()
+    db.session.commit()
 
 login_manager = LoginManager(app)
 
@@ -61,17 +62,21 @@ def login():
         print(submittedEmail)
         print(submittedPassword)
         print(user)
+
+        if user:
+            print(user.role)
+            print(user.password)
         # Check if credentials match
         if  user and submittedPassword == user.password and user.role == "provider":
             flash("Login successful")
-            # login_user(user)
+            login_user(user)
             # Identity =(user.id)
             # identity.provides.add(RoleNeed(user.role))
             # identity_changed.send(current_app._get_current_object(),
             #                       identity=Identity(user.id))
             return redirect(url_for("providerdashboard"))
         elif user and submittedPassword == user.password and user.role == "patient":
-            # login_user(user)
+            login_user(user)
             # identity_changed.send(current_app._get_current_object(),
             #                       identity=Identity(user.id))
             return redirect(url_for("patientdashboard"))
@@ -84,13 +89,18 @@ def login():
 @login_required
 # @provider_permission.require()
 def providerdashboard():
-    return render_template("providerdashboard.html")
+    patients = db.session.scalars(
+        select(User).where(User.role == "patient")
+    ).all()
+    print(patients)
+    return render_template("providerdashboard.html", patients=patients )
 
 @app.route("/patientdashboard")
 @login_required
 #@patient_permission.require()
 def patientdashboard():
-    return render_template("patientdashboard.html")
+    ehr = current_user.ehr
+    return render_template("patientdashboard.html", ehr=ehr)
 
 # Run code as script only, and not as an import
 if __name__ == "__main__":
