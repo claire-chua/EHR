@@ -5,5 +5,25 @@
 <!-- sets unicode standard -->
 <meta charset = "UTF-8"/>
 
-<h1>Hi, I'm the patient dashboard</h1>
+<head>
+    <!-- links stylesheet to html  -->
+    <link rel ="stylesheet" href="static/EHR CSS.css">
+</head>
+
+<div class="patientDashboard">
+<h1>My Health Record</h1>
+
+<h2><u>Personal Details</u></h2>
+<p><strong>Name:</strong> {{ ehr.first_name }} {{ ehr.last_name}}</p>
+<p><strong>Date of Birth:</strong> {{ ehr.date_of_birth }}</p>
+<p><strong>Gender:</strong> {{ ehr.gender }}</p>
+<p><strong>Address: </strong> {{ ehr.address}}</p>
+<p><strong>Phone Number:</strong> {{ ehr.phone_no}}</p>
+<p><strong>Emergency Phone Number: </strong> {{ ehr.emergency_phone_no }}</p>
+
+<h2><u>Medical History</u></h2>
+<p>{{ ehr.medical_history }}</p>
+
+<p><i>Note: If you would like to update your details, please reach out to <b>florence.nightingale@gmail.com</b></i></p>
+</div>
 </html>

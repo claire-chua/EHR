@@ -1,0 +1,30 @@
+<!-- sets html document up -->
+<!DOCTYPE html>
+<!-- sets language to english -->
+<html lang ="en">
+<!-- sets unicode standard -->
+<meta charset = "UTF-8"/>
+
+<head>
+    <!-- links stylesheet to html  -->
+    <link rel ="stylesheet" href="static/EHR CSS.css">
+</head>
+
+<div class="providerPatientDashboard">
+<h1>Patient Health Record</h1>
+
+<h2>Personal Details </h2>
+<p>Name: {{ ehr.first_name }} {{ ehr.last_name}}</p>
+<p>Date of Birth {{ ehr.date_of_birth }}</p>
+<p>Gender: {{ ehr.gender }}</p>
+<p>Address: {{ ehr.address }}</p>
+<p>Phone Number: {{ ehr.phone_no}}</p>
+<p>Emergency Phone Number: {{ ehr.emergency_phone_no }}</p>
+
+<h2>Medical History</h2>
+<p>{{ ehr.medical_history }}</p>
+
+<a href= "{{ patient.id }}/edit">Edit</a>
+
+</div>
+</html>

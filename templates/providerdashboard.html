@@ -5,5 +5,28 @@
 <!-- sets unicode standard -->
 <meta charset = "UTF-8"/>
 
-<h1>Hi</h1>
+<head>
+    <!-- links stylesheet to html  -->
+    <link rel ="stylesheet" href="static/EHR CSS.css">
+</head>
+
+<div class="providerDashboard">
+<h1>Patient Overview</h1>
+<table class ="patientTable">
+    <tr>
+    <th><u>Name</u></th>
+    <th><u>Email</u></th>
+    </tr>
+
+    {% for p in patients %}
+    <tr>
+        <td>{{ p.ehr.first_name }} {{ p.ehr.last_name }}</td>
+        <td>{{ p.email }}</td>
+        <td>
+            <a href="providerdashboard/patient/{{ p.id }}">View/Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
 </html>

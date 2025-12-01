@@ -1,0 +1,52 @@
+<!-- sets html document up -->
+<!DOCTYPE html>
+<!-- sets language to english -->
+<html lang ="en">
+<!-- sets unicode standard -->
+<meta charset = "UTF-8"/>
+
+<head>
+    <!-- links stylesheet to html  -->
+    <link rel ="stylesheet" href="static/EHR CSS.css">
+</head>
+
+<div class="providerPatientEditDashboard">
+
+<h1>Patient Health Record</h1>
+  
+<form method="POST" class="providerEditForm">
+<h2>Personal Details </h2>
+<p>First Name:</p>
+<input type ="string" name="first_name" value="{{ ehr.first_name }}">
+<p>Last Name:</p>
+<input type="string" name="last_name" value= "{{ ehr.last_name}}">
+<p>Date of Birth</p>
+<input type="date" name="date_of_birth" value="{{ehr.date_of_birth}}">
+<p>Gender:</p>
+<input type ="string" name="gender" value="{{ ehr.gender }}">
+<p>Address:</p>
+<input type="string" name ="address" value="{{ ehr.address}}">
+<p>Phone Number: </p>
+<input type="string" name="phone_no" value="{{ ehr.phone_no}}">
+<p>Emergency Phone Number: </p>
+<input type="string" name="emergency_phone_no" value="{{ ehr.emergency_phone_no }}">
+
+<h2>Medical History</h2>
+<input type ="text" name="medical_history" value="{{ ehr.medical_history }}">
+
+
+<button type="submit">Save</button>
+</form>
+
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+</html>
