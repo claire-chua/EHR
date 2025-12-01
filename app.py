@@ -1,18 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, session, current_app, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, DateField, TextAreaField
 from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed
 from sqlalchemy import select
 from db import db
 from models import User, EHR
+import os
+from dotenv import load_dotenv
 
 # Create a flask app 
 app = Flask(__name__)
 
+load_dotenv()
+
 # Configure SQLite database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///EHR.db"
-app.config['SECRET_KEY'] = 'secret'
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY")
 
 #Initialise app with db extension
 
@@ -45,6 +49,16 @@ class LoginForm(FlaskForm):
 
 # email = "healthcare.provider@gmail.com"
 # password = "password"
+class EditPatientForm(FlaskForm):
+    first_name = StringField()
+    last_name = StringField()
+    date_of_birth = DateField()
+    gender = StringField()
+    address = StringField()
+    phone_no = StringField()
+    emergency_phone_no = StringField()
+    medical_history = TextAreaField()
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -100,7 +114,36 @@ def providerdashboard():
 def providerpatientdashboard(user_id):
     user = db.session.get(User, user_id)
     ehr = user.ehr
+
     return render_template("providerpatientdashboard.html", patient=user, ehr=ehr )
+
+@app.route("/providerdashboard/patient/<int:user_id>/edit", methods=["GET","POST"])
+@login_required
+def providerpatienteditdashboard(user_id):
+    form = EditPatientForm()
+    user = db.session.get(User, user_id)
+    ehr = user.ehr
+
+    #encrypt saved details
+    if request.method == "POST":
+        ehr.first_name = form.first_name.data
+        ehr.last_name = form.last_name.data
+        ehr.date_of_birth = form.date_of_birth.data
+        ehr.gender = form.gender.data
+        ehr.address = form.address.data
+        ehr.phone_no = form.phone_no.data
+        ehr.emergency_phone_no = form.emergency_phone_no.data
+        ehr.medical_history = form.medical_history.data
+
+        db.session.commit()
+        flash("Patient record updated")
+
+    #decrypt the form
+    return render_template(
+        "providerpatienteditdashboard.html",
+        patient=user,
+        ehr=ehr
+        )
 
 @app.route("/patientdashboard")
 @login_required
