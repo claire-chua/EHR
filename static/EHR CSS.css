@@ -51,7 +51,7 @@ h1 {
     color: rgb(31, 31, 138);
 }
 
-.patientDashboard, .providerDashboard {
+.patientDashboard, .providerDashboard, .providerPatientDashboard, .providerPatientEditDashboard{
     background: white;
     width: 75%;
     height: 700px;
@@ -65,8 +65,4 @@ h1 {
 
 .patientTable td {
     padding-right: 20px;
-}
-
-.providerPatientDashboard{
-    background:pink;
 }
