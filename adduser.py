@@ -13,7 +13,7 @@ def add_user(email, password, role, ehr_data=None):
     if role == "patient":
         ehr = EHR(
             user=user,
-            first_name=ehr_data["first_name"],
+            first_name= ehr_data["first_name"],
             last_name=ehr_data["last_name"],
             date_of_birth=ehr_data["date_of_birth"],
             gender=ehr_data["gender"],

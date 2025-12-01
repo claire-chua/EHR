@@ -82,7 +82,6 @@ def login():
             print(user.password)
         # Check if credentials match
         if  user and submittedPassword == user.password and user.role == "provider":
-            flash("Login successful")
             login_user(user)
             # Identity =(user.id)
             # identity.provides.add(RoleNeed(user.role))
