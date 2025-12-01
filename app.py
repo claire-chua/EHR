@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, current_app, flash
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, login_user, login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, DateField, TextAreaField
-from flask_principal import Principal, Permission, RoleNeed, Identity, identity_changed
+from flask_principal import Principal
 from sqlalchemy import select
 from db import db
-from models import User, EHR
+from models import User
 import os
 from dotenv import load_dotenv
 
@@ -41,14 +41,6 @@ class LoginForm(FlaskForm):
     email = StringField()
     password = PasswordField()
 
-# provider_need = RoleNeed('provider')
-# provider_permission = RoleNeed('patient')
-                         
-# provider_permission = Permission(RoleNeed('provider'))
-# patient_permission = Permission(RoleNeed('patient'))
-
-# email = "healthcare.provider@gmail.com"
-# password = "password"
 class EditPatientForm(FlaskForm):
     first_name = StringField()
     last_name = StringField()
@@ -83,15 +75,9 @@ def login():
         # Check if credentials match
         if  user and submittedPassword == user.password and user.role == "provider":
             login_user(user)
-            # Identity =(user.id)
-            # identity.provides.add(RoleNeed(user.role))
-            # identity_changed.send(current_app._get_current_object(),
-            #                       identity=Identity(user.id))
             return redirect(url_for("providerdashboard"))
         elif user and submittedPassword == user.password and user.role == "patient":
             login_user(user)
-            # identity_changed.send(current_app._get_current_object(),
-            #                       identity=Identity(user.id))
             return redirect(url_for("patientdashboard"))
         else:
             flash("No account associated with email & password")
@@ -100,7 +86,6 @@ def login():
 
 @app.route("/providerdashboard")
 @login_required
-# @provider_permission.require()
 def providerdashboard():
     patients = db.session.scalars(
         select(User).where(User.role == "patient")
@@ -123,7 +108,6 @@ def providerpatienteditdashboard(user_id):
     user = db.session.get(User, user_id)
     ehr = user.ehr
 
-    #encrypt saved details
     if request.method == "POST":
         ehr.first_name = form.first_name.data
         ehr.last_name = form.last_name.data
@@ -137,7 +121,6 @@ def providerpatienteditdashboard(user_id):
         db.session.commit()
         flash("Patient record updated")
 
-    #decrypt the form
     return render_template(
         "providerpatienteditdashboard.html",
         patient=user,
@@ -146,11 +129,9 @@ def providerpatienteditdashboard(user_id):
 
 @app.route("/patientdashboard")
 @login_required
-#@patient_permission.require()
 def patientdashboard():
     ehr = current_user.ehr
     return render_template("patientdashboard.html", ehr=ehr)
 
-# Run code as script only, and not as an import
 if __name__ == "__main__":
     app.run(debug=True)

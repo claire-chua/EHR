@@ -27,7 +27,7 @@ class EHR(db.Model):
     )
     _first_name: Mapped[str] = mapped_column("first_name", String(20), nullable=False)
     _last_name: Mapped[str] = mapped_column("last_name", String(50), nullable=False)
-    date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
+    _date_of_birth: Mapped[date] = mapped_column("date_of_birth", String(10), nullable=False)
     _gender: Mapped[str] = mapped_column("gender", String(10), nullable=False)
     _address: Mapped[str] = mapped_column( "address", String(255), nullable=False)
     _phone_no: Mapped[str] = mapped_column("phone_no", String(30), nullable=False)
@@ -52,6 +52,16 @@ class EHR(db.Model):
     @last_name.setter
     def last_name(self, value: str):
         self._last_name = encrypt_text(value)
+    
+    @property
+    def date_of_birth(self) -> str:
+        decrypted = decrypt_text(self._date_of_birth)
+        return date.fromisoformat(decrypted)
+    
+    @date_of_birth.setter
+    def date_of_birth(self, value: str):
+        iso_str =value.isoformat()
+        self._date_of_birth = encrypt_text(iso_str)
     
     @property
     def gender(self) -> str:
