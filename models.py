@@ -5,7 +5,9 @@ from flask_login import UserMixin
 from datetime import date
 from crypto_utils import encrypt_text, decrypt_text
 
-#user table model
+#creates two models; User and EHR, as well as setters and getters to call the encrypt and decrypt functions.
+
+#User table model
 class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(unique=True,nullable=False)

@@ -2,6 +2,8 @@ from app import app, db
 from models import User, EHR
 from datetime import date
 
+# adds two patients with EHR data and one provider to the database
+
 def add_user(email, password, role, ehr_data=None):
     user = User(
         email=email,

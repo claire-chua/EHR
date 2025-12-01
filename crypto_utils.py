@@ -5,6 +5,7 @@ from Crypto.Protocol.KDF import PBKDF2
 from base64 import b64encode, b64decode
 from Crypto.Cipher import AES
 
+#contains functions that encrypts and decrypts the data with AES-256 CFB, as well as the inital function used to generate a key (that has been commented out)
 
 load_dotenv()
 
@@ -50,7 +51,7 @@ def decrypt_text(cipher_b64: str):
     #Extract cipher text
     ciphertext = raw[16:]
 
-    #recreate cipher wth iv
+    #recreate cipher with iv
     cipher = AES.new(key, AES.MODE_CFB, iv=iv)
     plaintext_bytes = cipher.decrypt(ciphertext)
 
